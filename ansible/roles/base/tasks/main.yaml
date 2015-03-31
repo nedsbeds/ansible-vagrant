@@ -1,0 +1,14 @@
+---
+
+- name: Install common system packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - htop
+    - vim  
+
+- name: Add timezone file
+  template:
+    src=timezone.j2
+    dest=/etc/timezone
+  notify:
+    - Configure timezone

@@ -1,0 +1,13 @@
+---
+
+- name: Install PHP packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - php-pear
+    - php5-cli
+    - php5-curl
+    - php5-dev
+    - php5-mysql
+    - php5-xdebug
+  notify:
+  - Restart Apache
