@@ -12,8 +12,12 @@ OPTIONS = {
         :timezone => "Europe/London",
     },
     :apache => {
-        :local_doc_root => ".",
-        :remote_doc_root => "/var/www/vagrant",
+        :local_document_root => ".",
+        :remote_document_root => "/var/www/vagrant",
+        :modules => [
+            "headers",
+            "rewrite",
+        ],
     },
 }
 
@@ -70,8 +74,8 @@ Vagrant.configure(2) do |config|
   # Share the Apache document root with the guest VM using vagrant-bindfs
   # First we share our host directory to /vagrant-nfs, then we use
   # bindfs to re-mount /vagrant-nfs to the real guest directory
-  config.vm.synced_folder OPTIONS[:apache][:local_doc_root], "/vagrant-nfs", type: :nfs
-  config.bindfs.bind_folder "/vagrant-nfs", OPTIONS[:apache][:remote_doc_root]
+  config.vm.synced_folder OPTIONS[:apache][:local_document_root], "/vagrant-nfs", type: :nfs
+  config.bindfs.bind_folder "/vagrant-nfs", OPTIONS[:apache][:remote_document_root]
   
   
   ## SSH
@@ -123,13 +127,8 @@ Vagrant.configure(2) do |config|
     # Call the playbook
     ansible.playbook = "ansible/playbook.yaml"
     
-    # Pass in custom vars
-    ansible.extra_vars = {
-      timezone: OPTIONS[:system][:timezone],
-      document_root: OPTIONS[:apache][:remote_doc_root],
-    }
-    
-    #ansible.verbose = "vvvv"
+    # Pass in box options
+    ansible.extra_vars = OPTIONS
     
   end
   

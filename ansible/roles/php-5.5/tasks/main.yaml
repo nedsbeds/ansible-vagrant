@@ -9,7 +9,7 @@
   lineinfile: >
     dest={{ item }}
     regexp="date.timezone ="
-    line="date.timezone = {{ timezone }}"
+    line="date.timezone = {{ system.timezone }}"
   with_items:
     - /etc/php5/apache2/php.ini
     - /etc/php5/cli/php.ini
