@@ -3,6 +3,14 @@
 - name: Install Apache
   apt: name=apache2 state=latest
 
+- name: Enable Apache modules
+  command: a2enmod {{ item }}
+  with_items:
+    - headers
+    - rewrite
+  notify:
+  - Restart Apache
+
 - name: Disable default vhost
   file:
     path=/etc/apache2/sites-enabled/000-default.conf
