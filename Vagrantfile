@@ -2,25 +2,9 @@
 # vi: set ft=ruby :
 
 
-## Set box options
-OPTIONS = {
-    :box => {
-        :box_name => "Canvas",
-        :box_number => 10,
-    },
-    :system => {
-        :timezone => "Europe/London",
-    },
-    :apache => {
-        :local_document_root => ".",
-        :remote_document_root => "/var/www/vagrant",
-        :modules => [
-            "headers",
-            "rewrite",
-        ],
-    },
-}
+## Load box options
 
+require "./VagrantConfig.rb"
 
 
 ## Configure the box
@@ -38,35 +22,35 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
   
   # Set the name of the box (as shown in Vagrant messages)
-  config.vm.define OPTIONS[:box][:box_name]
+  config.vm.define VagrantConfig[:box][:box_name]
   
   # Set the guest's hostname
-  config.vm.hostname = OPTIONS[:box][:box_name].downcase
+  config.vm.hostname = VagrantConfig[:box][:box_name].downcase
   
   
   ## Network
   
   # Create a private network, using the box number to determine the IP
-  config.vm.network "private_network", ip: "10.10.10.#{OPTIONS[:box][:box_number]}"
+  config.vm.network "private_network", ip: "10.10.10.#{VagrantConfig[:box][:box_number]}"
   
   # Forward ports for Apache, SSL, and MySQL, using the box number for the port component
   config.vm.network "forwarded_port", 
     guest: 80,
-    host: "80#{OPTIONS[:box][:box_number]}"
+    host: "80#{VagrantConfig[:box][:box_number]}"
   
   config.vm.network "forwarded_port", 
     guest: 443,
-    host: "44#{OPTIONS[:box][:box_number]}"
+    host: "44#{VagrantConfig[:box][:box_number]}"
   
   config.vm.network "forwarded_port", 
     guest: 3306,
-    host: "33#{OPTIONS[:box][:box_number]}"
+    host: "33#{VagrantConfig[:box][:box_number]}"
   
   # Specify ports that Vagrant may use for "handling port collisions and such"
   config.vm.usable_port_range = 2900..3000
   
   # Set a message for when `vagrant up` has finished
-  config.vm.post_up_message = "'#{OPTIONS[:box][:box_name]}' (box number: #{OPTIONS[:box][:box_number]}) finished building"
+  config.vm.post_up_message = "'#{VagrantConfig[:box][:box_name]}' (box number: #{VagrantConfig[:box][:box_number]}) finished building"
   
   
   ## Filesystem
@@ -74,8 +58,8 @@ Vagrant.configure(2) do |config|
   # Share the Apache document root with the guest VM using vagrant-bindfs
   # First we share our host directory to /vagrant-nfs, then we use
   # bindfs to re-mount /vagrant-nfs to the real guest directory
-  config.vm.synced_folder OPTIONS[:apache][:local_document_root], "/vagrant-nfs", type: :nfs
-  config.bindfs.bind_folder "/vagrant-nfs", OPTIONS[:apache][:remote_document_root]
+  config.vm.synced_folder VagrantConfig[:apache][:local_document_root], "/vagrant-nfs", type: :nfs
+  config.bindfs.bind_folder "/vagrant-nfs", VagrantConfig[:apache][:remote_document_root]
   
   
   ## SSH
@@ -86,7 +70,7 @@ Vagrant.configure(2) do |config|
   # Override default forwarded port for SSH
   config.vm.network :forwarded_port,
     guest: 22,
-    host: "22#{OPTIONS[:box][:box_number]}",
+    host: "22#{VagrantConfig[:box][:box_number]}",
     id: "ssh",
     auto_correct: true
   
@@ -97,7 +81,7 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |vb|
     
     # The name of the box, as it appears in VirtualBox
-    vb.name = OPTIONS[:box][:box_name]
+    vb.name = VagrantConfig[:box][:box_name]
     
     # CPU and memory allocation
     vb.cpus = 1
@@ -128,7 +112,7 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "ansible/playbook.yaml"
     
     # Pass in box options
-    ansible.extra_vars = OPTIONS
+    ansible.extra_vars = VagrantConfig
     
   end
   
