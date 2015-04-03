@@ -1,7 +1,35 @@
 ---
 
+# Installs and configures Apache
+
+# Uses the file module to create symlinks rather than calling
+# commands like a2ensite, a2enconf, etc., because file will
+# make the same changes while maintaining idempotence
+
+
+# Install apache2
+
 - name: Install Apache
   apt: name=apache2 state=latest
+
+
+# Servername config
+
+- name: Add servername config file
+  template:
+    src=servername.conf.j2
+    dest=/etc/apache2/conf-available/servername.conf
+
+- name: Enable servername config
+  file:
+    src=/etc/apache2/conf-available/servername.conf
+    dest=/etc/apache2/conf-enabled/servername.conf
+    state=link
+  notify:
+  - Reload Apache
+  
+
+# Apache modules
 
 - name: Enable Apache modules
   apache2_module: state=present name={{ item }}
@@ -10,6 +38,9 @@
     - rewrite
   notify:
   - Restart Apache
+
+
+# Vhost config
 
 - name: Disable default vhost
   file:
