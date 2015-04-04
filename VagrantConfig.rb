@@ -10,6 +10,7 @@ VagrantConfig = {
     local_document_root: ".",
     remote_document_root: "/var/www/vagrant",
     modules: [
+      "expires",
       "headers",
       "rewrite",
     ],

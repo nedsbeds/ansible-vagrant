@@ -33,9 +33,7 @@
 
 - name: Enable Apache modules
   apache2_module: state=present name={{ item }}
-  with_items:
-    - headers
-    - rewrite
+  with_items: apache.modules
   notify:
   - Restart Apache
 
