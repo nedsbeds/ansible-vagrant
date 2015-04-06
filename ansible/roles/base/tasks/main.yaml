@@ -12,3 +12,7 @@
     dest=/etc/timezone
   notify:
     - Configure timezone
+    # Cron and syslog are timezone-dependent, so they should
+    # both be restarted after changing the timezone.
+    - Restart cron
+    - Restart syslog
