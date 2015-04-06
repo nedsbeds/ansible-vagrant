@@ -4,6 +4,10 @@ VagrantConfig = {
     box_number: 10,
   },
   system: {
+    extra_packages: [
+      "htop",
+      "vim",
+    ],
     timezone: "Europe/London",
   },
   apache: {
