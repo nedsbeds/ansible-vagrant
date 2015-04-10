@@ -51,6 +51,8 @@
   template:
     src=vhost.conf.j2
     dest=/etc/apache2/sites-available/vagrant.conf
+  notify:
+    - Reload Apache
 
 - name: Enable vagrant vhost
   file:

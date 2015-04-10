@@ -12,6 +12,7 @@
   roles:
     - base
     - apache
+    - apache-ssl
     - php-5.5
     - php-packages
     - uploadprogress

@@ -11,6 +11,7 @@ VagrantConfig = {
     timezone: "Europe/London",
   },
   apache: {
+    server_name: "local.canvas",
     local_document_root: ".",
     remote_document_root: "/var/www/vagrant",
     modules: [
