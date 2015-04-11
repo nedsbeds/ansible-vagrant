@@ -14,6 +14,6 @@
     - apache
     - apache-ssl
     - php-5.5
-    - php-packages
+    - php-common
     - uploadprogress
     - composer

@@ -1,7 +1,0 @@
----
-
-- name: Install PHP packages
-  apt: name={{ item }} state=latest
-  with_items: php.extra_packages
-  notify:
-    - Restart Apache
