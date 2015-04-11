@@ -10,4 +10,4 @@
     - php5-mysql
     - php5-xdebug
   notify:
-  - Restart Apache
+    - Restart Apache

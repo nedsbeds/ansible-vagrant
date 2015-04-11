@@ -7,7 +7,8 @@
 - name: Enable mod_ssl
   apache2_module: state=present name=ssl
   notify:
-  - Restart Apache
+    - Restart Apache
+
 
 # Generate self-signed SSL cert
 
@@ -23,6 +24,7 @@
       -key /etc/ssl/private/vagrant.key
       -out /etc/ssl/certs/vagrant.crt
     creates=/etc/ssl/certs/vagrant.crt
+
 
 # Vhost config
 

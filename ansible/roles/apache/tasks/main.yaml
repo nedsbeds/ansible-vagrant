@@ -26,7 +26,7 @@
     dest=/etc/apache2/conf-enabled/servername.conf
     state=link
   notify:
-  - Reload Apache
+    - Reload Apache
   
 
 # Apache modules
@@ -35,7 +35,7 @@
   apache2_module: state=present name={{ item }}
   with_items: apache.modules
   notify:
-  - Restart Apache
+    - Restart Apache
 
 
 # Vhost config
@@ -45,7 +45,7 @@
     path=/etc/apache2/sites-enabled/000-default.conf
     state=absent
   notify:
-  - Reload Apache
+    - Reload Apache
 
 - name: Install vagrant vhost
   template:
@@ -60,4 +60,4 @@
     dest=/etc/apache2/sites-enabled/vagrant.conf
     state=link
   notify:
-  - Reload Apache
+    - Reload Apache
