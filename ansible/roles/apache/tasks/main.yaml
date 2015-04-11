@@ -27,7 +27,26 @@
     state=link
   notify:
     - Reload Apache
-  
+
+
+# Change Apache user and group
+
+- name: Set Apache user
+  lineinfile:
+    dest="/etc/apache2/envvars"
+    regexp="export APACHE_RUN_USER="
+    line="export APACHE_RUN_USER=vagrant"
+  notify:
+    - Restart Apache
+
+- name: Set Apache group
+  lineinfile:
+    dest="/etc/apache2/envvars"
+    regexp="export APACHE_RUN_GROUP="
+    line="export APACHE_RUN_GROUP=vagrant"
+  notify:
+    - Restart Apache
+
 
 # Apache modules
 
