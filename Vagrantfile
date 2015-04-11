@@ -50,7 +50,20 @@ Vagrant.configure(2) do |config|
   config.vm.usable_port_range = 2900..3000
   
   # Set a message for when `vagrant up` has finished
-  config.vm.post_up_message = "'#{VagrantConfig[:box][:box_name]}' (box number: #{VagrantConfig[:box][:box_number]}) finished building"
+  config.vm.post_up_message = <<-pumsg
+    The "#{VagrantConfig[:box][:box_name]}" VM (box number: #{VagrantConfig[:box][:box_number]}) has finished building.
+    IP address: 10.10.10.#{VagrantConfig[:box][:box_number]}
+    
+    Available ports:
+    
+    SSH:    localhost:22#{VagrantConfig[:box][:box_number]}
+    HTTP:   localhost:80#{VagrantConfig[:box][:box_number]}
+    HTTPS:  localhost:44#{VagrantConfig[:box][:box_number]}
+    MySQL:  localhost:33#{VagrantConfig[:box][:box_number]}
+    
+    Have a nice day.
+    
+  pumsg
   
   
   ## Filesystem
