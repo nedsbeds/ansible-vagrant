@@ -20,4 +20,15 @@ VagrantConfig = {
       "rewrite",
     ],
   },
+  php: {
+    extra_packages: [
+      "php-pear",
+      "php5-cli",
+      "php5-curl",
+      "php5-dev",
+      "php5-gd",
+      "php5-mysql",
+      "php5-xdebug",
+    ],
+  }
 }
