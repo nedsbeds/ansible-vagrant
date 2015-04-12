@@ -13,6 +13,7 @@
     - base
     - apache
     - apache-ssl
+    - mysql
     - php-5.5
     - php-common
     - uploadprogress
