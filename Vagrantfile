@@ -6,6 +6,10 @@
 
 require "./VagrantConfig.rb"
 
+# Calculate hostname and IP values
+VagrantConfig[:box][:hostname] = VagrantConfig[:box][:box_name].downcase
+VagrantConfig[:box][:ip] = "10.10.10.#{VagrantConfig[:box][:box_number]}"
+
 
 ## Configure the box
 
@@ -25,13 +29,13 @@ Vagrant.configure(2) do |config|
   config.vm.define VagrantConfig[:box][:box_name]
   
   # Set the guest's hostname
-  config.vm.hostname = VagrantConfig[:box][:box_name].downcase
+  config.vm.hostname = VagrantConfig[:box][:hostname]
   
   
   ## Network
   
   # Create a private network, using the box number to determine the IP
-  config.vm.network "private_network", ip: "10.10.10.#{VagrantConfig[:box][:box_number]}"
+  config.vm.network "private_network", ip: VagrantConfig[:box][:ip]
   
   # Forward ports for Apache, SSL, and MySQL, using the box number for the port component
   config.vm.network "forwarded_port", 
@@ -52,7 +56,7 @@ Vagrant.configure(2) do |config|
   # Set a message for when `vagrant up` has finished
   config.vm.post_up_message = <<-pumsg
     The "#{VagrantConfig[:box][:box_name]}" VM (box number: #{VagrantConfig[:box][:box_number]}) has finished building.
-    IP address: 10.10.10.#{VagrantConfig[:box][:box_number]}
+    IP address: #{VagrantConfig[:box][:ip]}
     
     Available ports:
     
