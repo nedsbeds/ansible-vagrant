@@ -26,23 +26,23 @@
 - name: Allow MySQL root connections from anywhere
   mysql_user:
     name=root
-    password=root
+    password={{ mysql.root_password }}
     host=%
     priv=*.*:ALL,GRANT
     state=present
     login_user=root
-    login_password=root
+    login_password={{ mysql.root_password }}
     check_implicit_admin=yes
 
 - name: Change MySQL root password
   mysql_user:
     name=root
-    password=root
+    password={{ mysql.root_password }}
     host={{ item }}
     priv=*.*:ALL,GRANT
     state=present
     login_user=root
-    login_password=root
+    login_password={{ mysql.root_password }}
     check_implicit_admin=yes
   with_items:
     - "{{ box.hostname }}"
@@ -56,7 +56,7 @@
 
 - name: Create MySQL database
   mysql_db:
-    name=vagrant
+    name={{ mysql.database_name }}
     state=present
     login_user=root
-    login_password=root
+    login_password={{ mysql.root_password }}

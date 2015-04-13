@@ -20,6 +20,10 @@ VagrantConfig = {
       "rewrite",
     ],
   },
+  mysql: {
+    root_password: "root",
+    database_name: "vagrant",
+  },
   php: {
     extra_packages: [
       "php-pear",
