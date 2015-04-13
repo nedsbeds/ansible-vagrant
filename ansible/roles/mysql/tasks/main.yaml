@@ -50,3 +50,13 @@
     - ::1
     - localhost
     - "%"
+
+
+## Create database
+
+- name: Create MySQL database
+  mysql_db:
+    name=vagrant
+    state=present
+    login_user=root
+    login_password=root
