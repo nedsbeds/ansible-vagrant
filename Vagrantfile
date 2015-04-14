@@ -4,7 +4,7 @@
 
 ## Load box options
 
-require "./VagrantConfig.rb"
+require_relative "VagrantConfig.rb"
 
 # Calculate hostname and IP values
 VagrantConfig[:box][:hostname] = VagrantConfig[:box][:box_name].downcase
