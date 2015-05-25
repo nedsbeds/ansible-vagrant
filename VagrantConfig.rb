@@ -10,10 +10,13 @@ VagrantConfig = {
     ],
     timezone: "Europe/London",
   },
+  sync: {
+    from: ".",
+    to: "/var/www/vagrant",
+  },
   apache: {
     server_name: "local.canvas",
-    local_document_root: ".",
-    remote_document_root: "/var/www/vagrant",
+    document_root: "/var/www/vagrant",
     modules: [
       "expires",
       "headers",

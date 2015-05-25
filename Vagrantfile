@@ -75,8 +75,8 @@ Vagrant.configure(2) do |config|
   # Share the Apache document root with the guest VM using vagrant-bindfs
   # First we share our host directory to /vagrant-nfs, then we use
   # bindfs to re-mount /vagrant-nfs to the real guest directory
-  config.vm.synced_folder VagrantConfig[:apache][:local_document_root], "/vagrant-nfs", type: :nfs
-  config.bindfs.bind_folder "/vagrant-nfs", VagrantConfig[:apache][:remote_document_root]
+  config.vm.synced_folder VagrantConfig[:sync][:from], "/vagrant-nfs", type: :nfs
+  config.bindfs.bind_folder "/vagrant-nfs", VagrantConfig[:sync][:to]
   
   
   ## SSH
