@@ -4,7 +4,7 @@
 
 ## Load box options
 
-require_relative "VagrantConfig.rb"
+require_relative "VagrantConfig/VagrantConfig.rb"
 
 # Calculate hostname and IP values
 VagrantConfig[:box][:hostname] = VagrantConfig[:box][:box_name].downcase
@@ -153,7 +153,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible" do |ansible|
     
     # Call the playbook
-    ansible.playbook = "ansible/playbook.yaml"
+    ansible.playbook = "VagrantConfig/ansible/playbook.yaml"
     
     # Pass in box options
     ansible.extra_vars = VagrantConfig
