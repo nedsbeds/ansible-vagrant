@@ -13,7 +13,7 @@ VagrantConfig = {
   sync: {
     from: ".",
     to: "/var/www/vagrant",
-    method: :rsync,
+    method: :nfs,
   },
   apache: {
     server_name: "local.canvas",
