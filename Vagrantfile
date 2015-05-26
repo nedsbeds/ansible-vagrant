@@ -72,11 +72,38 @@ Vagrant.configure(2) do |config|
   
   ## Filesystem
   
-  # Share the Apache document root with the guest VM using vagrant-bindfs
-  # First we share our host directory to /vagrant-nfs, then we use
-  # bindfs to re-mount /vagrant-nfs to the real guest directory
-  config.vm.synced_folder VagrantConfig[:sync][:from], "/vagrant-nfs", type: :nfs
-  config.bindfs.bind_folder "/vagrant-nfs", VagrantConfig[:sync][:to]
+  # Choose NFS or rsync
+  if (:nfs === VagrantConfig[:sync][:method])
+    
+    # NFS
+    
+    # Share the Apache document root with the guest VM using vagrant-bindfs
+    # First we share our host directory to /vagrant-nfs, then we use
+    # bindfs to re-mount /vagrant-nfs to the real guest directory
+    config.vm.synced_folder VagrantConfig[:sync][:from], "/vagrant-nfs", type: :nfs
+    config.bindfs.bind_folder "/vagrant-nfs", VagrantConfig[:sync][:to]
+  
+  elsif (:rsync === VagrantConfig[:sync][:method])
+    
+    # rsync
+    
+    # Set the base rsync options
+    config.vm.synced_folder(
+      VagrantConfig[:sync][:from],
+      VagrantConfig[:sync][:to],
+      type: "rsync",
+      rsync__exclude: ".git/"
+    )
+    
+    # Set gatling-rsync plugin options
+    if Vagrant.has_plugin?("vagrant-gatling-rsync")
+      config.gatling.latency = 2.5
+      config.gatling.time_format = "%H:%M:%S"
+    end
+    
+  else
+    abort "Invalid sync method '#{VagrantConfig[:sync][:method].inspect}'."
+  end
   
   
   ## SSH
