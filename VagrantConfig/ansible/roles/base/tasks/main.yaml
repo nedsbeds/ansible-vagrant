@@ -14,9 +14,3 @@
     # both be restarted after changing the timezone.
     - Restart cron
     - Restart syslog
-
-- name: Update hosts file
-  lineinfile:
-    dest=/etc/hosts
-    line="127.0.0.1 {{ box.hostname }}"
-    state=present
