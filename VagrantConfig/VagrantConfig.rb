@@ -2,6 +2,9 @@ VagrantConfig = {
   box: {
     box_name: "Canvas",
     box_number: 0,
+    base_box: "ubuntu/trusty64",
+    cpus: 1,
+    memory: 512,
   },
   system: {
     extra_packages: [
