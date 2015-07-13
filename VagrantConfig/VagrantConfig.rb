@@ -1,6 +1,6 @@
 VagrantConfig = {
   box: {
-    box_name: "Canvas",
+    box_name: "Vagrant",
     box_number: 0,
     base_box: "ubuntu/trusty64",
     cpus: 1,
