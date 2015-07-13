@@ -6,6 +6,13 @@
 
 require_relative "VagrantConfig/VagrantConfig.rb"
 
+
+# Make sure a box number has been set
+if VagrantConfig[:box][:box_number] < 1
+   abort "A box number must be set. The box number should be unique (not used on any other project)."
+end
+
+
 # Calculate hostname and IP values
 VagrantConfig[:box][:hostname] = VagrantConfig[:box][:box_name].downcase
 VagrantConfig[:box][:ip] = "10.10.10.#{VagrantConfig[:box][:box_number]}"

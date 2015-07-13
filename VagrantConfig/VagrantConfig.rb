@@ -1,7 +1,7 @@
 VagrantConfig = {
   box: {
     box_name: "Canvas",
-    box_number: 10,
+    box_number: 0,
   },
   system: {
     extra_packages: [
