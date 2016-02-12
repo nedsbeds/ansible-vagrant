@@ -7,6 +7,7 @@
 
 - name: Add Composer to PATH
   lineinfile:
-    dest=/home/vagrant/.profile
+    dest=/home/vagrant/.bashrc
     state=present
-    line='export PATH="$PATH:$HOME/.composer/vendor/bin"'
+    line='export PATH="$PATH:$HOME/.config/composer/vendor/bin"'
+    insertbefore=BOF

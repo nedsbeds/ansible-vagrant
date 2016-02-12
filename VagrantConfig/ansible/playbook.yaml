@@ -18,3 +18,4 @@
     - php-common
     - uploadprogress
     - composer
+    - drush
