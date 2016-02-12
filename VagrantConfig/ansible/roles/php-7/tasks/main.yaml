@@ -1,0 +1,20 @@
+---
+
+- name: Add PHP 7 PPA repository
+  apt_repository: repo=ppa:ondrej/php-7.0
+
+- name: Install PHP 7
+  apt: name=php7.0 state=latest
+  notify:
+    - Restart Apache
+
+- name: Set PHP timezone
+  lineinfile:
+    dest={{ item }}
+    regexp="date.timezone ="
+    line="date.timezone = {{ system.timezone }}"
+  with_items:
+    - /etc/php/7.0/apache2/php.ini
+    - /etc/php/7.0/cli/php.ini
+  notify:
+    - Restart Apache
